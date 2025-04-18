@@ -3,6 +3,7 @@ package lk.badagini.core.ordermangement.service.impl
 import lk.badagini.core.ordermangement.domain.Order
 import lk.badagini.core.ordermangement.domain.OrderStatus
 import lk.badagini.core.ordermangement.domain.OrderStatusHistory
+import lk.badagini.core.ordermangement.events.OrderEventPublisher
 import lk.badagini.core.ordermangement.repository.OrderRepository
 import lk.badagini.core.ordermangement.service.IOrderService
 import org.springframework.data.domain.Page
@@ -13,7 +14,8 @@ import java.time.LocalDateTime
 
 @Service
 class OrderServiceImpl(
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val orderEventPublisher: OrderEventPublisher
 ) : IOrderService {
 
     @Transactional
@@ -26,7 +28,9 @@ class OrderServiceImpl(
                 actor = "CUSTOMER"
             )
         )
-        return orderRepository.save(order)
+        val savedOrder = orderRepository.save(order)
+        orderEventPublisher.publishOrderStatusChange(savedOrder, "CUSTOMER")
+        return savedOrder
     }
 
     override fun getOrder(orderId: Long): Order {
@@ -67,7 +71,9 @@ class OrderServiceImpl(
             )
         )
 
-        return orderRepository.save(order)
+        val savedOrder = orderRepository.save(order)
+        orderEventPublisher.publishOrderStatusChange(savedOrder, actor)
+        return savedOrder
     }
 
     @Transactional
@@ -90,7 +96,9 @@ class OrderServiceImpl(
             )
         )
 
-        return orderRepository.save(order)
+        val savedOrder = orderRepository.save(order)
+        orderEventPublisher.publishOrderStatusChange(savedOrder, actor)
+        return savedOrder
     }
 
     private fun isValidStatusTransition(current: OrderStatus, next: OrderStatus): Boolean {

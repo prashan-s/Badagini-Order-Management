@@ -1,6 +1,7 @@
 package lk.badagini.core.ordermangement.util
 
 import lk.badagini.core.ordermangement.domain.OrderStatus
+import lk.badagini.core.ordermangement.events.OrderEventPublisher
 import lk.badagini.core.ordermangement.repository.OrderRepository
 import lk.badagini.core.ordermangement.service.IOrderService
 import org.springframework.scheduling.annotation.Scheduled
@@ -10,7 +11,8 @@ import java.time.LocalDateTime
 @Component
 class SLAEnforcer(
     private val orderRepository: OrderRepository,
-    private val orderService: IOrderService
+    private val orderService: IOrderService,
+    private val orderEventPublisher: OrderEventPublisher
 ) {
     @Scheduled(fixedDelay = 30000) // 30 seconds
     fun enforceTimeLimits() {
