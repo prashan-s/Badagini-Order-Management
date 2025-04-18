@@ -5,6 +5,7 @@ import lk.badagini.core.ordermangement.domain.Order
 import lk.badagini.core.ordermangement.domain.OrderItem
 import lk.badagini.core.ordermangement.dto.*
 import lk.badagini.core.ordermangement.service.IOrderService
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -15,11 +16,12 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/orders")
 class OrderController(
     private val orderService: IOrderService,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val rabbitTemplate: RabbitTemplate
 ) {
 
     @PostMapping
-    fun createOrder(@RequestBody request: CreateOrderRequest): ResponseEntity<OrderResponse> {
+    fun createOrder(@RequestBody request: CreateOrderRequest): ResponseEntity<CreateOrderResponse> {
         val order = Order(
             customerUserId = request.customerUserId,
             restaurantId = request.restaurantId,
@@ -36,7 +38,25 @@ class OrderController(
             }.toMutableList()
         )
         
-        return ResponseEntity(OrderResponse.fromEntity(orderService.createOrder(order)), HttpStatus.CREATED)
+        val createdOrder = orderService.createOrder(order)
+        
+        // Initiate payment process by publishing to payment service
+        val paymentRequest = PaymentInitiationRequest(
+            orderId = createdOrder.orderId,
+            amount = createdOrder.totalAmount,
+            customerId = createdOrder.customerUserId
+        )
+        
+        rabbitTemplate.convertAndSend("payment.events", "payment.initiate", paymentRequest)
+        
+        return ResponseEntity(
+            CreateOrderResponse(
+                order = OrderResponse.fromEntity(createdOrder),
+                paymentRequired = true,
+                totalAmount = createdOrder.totalAmount
+            ), 
+            HttpStatus.CREATED
+        )
     }
 
     @GetMapping("/{id}")
