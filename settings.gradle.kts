@@ -1,1 +1,1 @@
-rootProject.name = "Order-Mangement"
+rootProject.name = "order-management"
