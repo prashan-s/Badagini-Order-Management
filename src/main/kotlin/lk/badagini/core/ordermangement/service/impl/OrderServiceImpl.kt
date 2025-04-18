@@ -4,6 +4,7 @@ import lk.badagini.core.ordermangement.domain.Order
 import lk.badagini.core.ordermangement.domain.OrderStatus
 import lk.badagini.core.ordermangement.domain.OrderStatusHistory
 import lk.badagini.core.ordermangement.events.OrderEventPublisher
+import lk.badagini.core.ordermangement.exception.SLABreachException
 import lk.badagini.core.ordermangement.repository.OrderRepository
 import lk.badagini.core.ordermangement.service.IOrderService
 import org.springframework.data.domain.Page
@@ -52,7 +53,7 @@ class OrderServiceImpl(
         val newStatus = OrderStatus.valueOf(status)
         
         if (!isValidStatusTransition(order.status, newStatus)) {
-            throw IllegalStateException("Invalid status transition from ${order.status} to $newStatus")
+            throw SLABreachException("Invalid status transition from ${order.status} to $newStatus")
         }
 
         val previousStatus = order.status
