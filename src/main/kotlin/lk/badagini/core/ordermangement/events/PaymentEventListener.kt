@@ -13,7 +13,7 @@ class PaymentEventListener(
         private val log = LoggerFactory.getLogger(PaymentEventListener::class.java)
     }
 
-    @RabbitListener(queues = ["payment.authorized"])
+    @RabbitListener(queues = ["payment-success-queue"])
     fun handlePaymentAuthorized(event: PaymentEventPayload) {
         log.info("Received payment authorization for order ${event.orderId}: ${event.result}")
         if (event.result == "SUCCESS") {
@@ -22,7 +22,7 @@ class PaymentEventListener(
         }
     }
 
-    @RabbitListener(queues = ["payment.failed"])
+    @RabbitListener(queues = ["payment-failed-queue"])
     fun handlePaymentFailed(event: PaymentEventPayload) {
         log.info("Received payment failure for order ${event.orderId}")
         orderService.updateOrderStatus(event.orderId, "FAILED_PAYMENT", "PAYMENT_SERVICE")
