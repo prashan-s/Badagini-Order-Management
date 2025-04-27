@@ -1,6 +1,6 @@
 spring:
   application:
-    name: order-management-service
+    name: orders
 
 #  datasource:
 #    url: jdbc:mysql://localhost:3306/db_order
@@ -23,7 +23,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 
   rabbitmq:
-    host : app.dulanga.com
+    host : old-app.dulanga.com
     port: 5672
     username: guest
     password: guest
@@ -48,7 +48,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://app.dulanga.com/service-registry/eureka/
+      defaultZone: https://old-app.dulanga.com/service-registry/eureka/
     fetch-registry: true
     register-with-eureka: true
   instance:
