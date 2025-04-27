@@ -21,15 +21,20 @@ class OrderController(
 ) {
 
     @PostMapping
-    fun createOrder(@RequestBody request: CreateOrderRequest): ResponseEntity<CreateOrderResponse> {
+    fun createOrder(
+        @RequestBody request: CreateOrderRequest,
+        @RequestHeader("X-userId") userId: Long,
+        @RequestHeader("X-email") email: String,
+        @RequestHeader("X-role") role: String
+    ): ResponseEntity<CreateOrderResponse> {
         val order = Order(
-            customerUserId = request.customerUserId,
+            customerUserId = userId,
             restaurantId = request.restaurantId,
             totalAmount = request.items.sumOf { it.itemPrice * it.quantity.toBigDecimal() },
             deliveryAddress = objectMapper.writeValueAsString(request.deliveryAddress),
             items = request.items.map { item ->
                 OrderItem(
-                    order = Order(customerUserId = request.customerUserId, restaurantId = request.restaurantId, totalAmount = item.itemPrice, deliveryAddress = ""),
+                    order = Order(customerUserId = userId, restaurantId = request.restaurantId, totalAmount = item.itemPrice, deliveryAddress = ""),
                     menuItemId = item.menuItemId,
                     itemName = item.itemName,
                     quantity = item.quantity,
@@ -46,7 +51,7 @@ class OrderController(
         val paymentRequest = PaymentInitiationRequest(
             orderId = createdOrder.orderId,
             amount = createdOrder.totalAmount,
-            customerId = createdOrder.customerUserId
+            customerId = userId
         )
         
         rabbitTemplate.convertAndSend("payment.events", "payment.initiate", paymentRequest)
