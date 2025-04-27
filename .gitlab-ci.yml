@@ -16,6 +16,9 @@ build:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
 
 docker_build_and_push:
   stage: docker
