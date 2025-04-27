@@ -34,22 +34,11 @@ class SecurityConfig() {
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http.cors { cors: CorsConfigurer<HttpSecurity?> -> cors.configurationSource(corsConfigurationSource()) }
-        http.csrf { obj: CsrfConfigurer<HttpSecurity> -> obj.disable() }
-            .authorizeHttpRequests(
-                Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> { request ->
-                    request
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
-                        .anyRequest().permitAll()
-                }
-            )
-            .formLogin { form -> form.disable() }
-            .sessionManagement { manager: SessionManagementConfigurer<HttpSecurity?> ->
-                manager.sessionCreationPolicy(
-                    SessionCreationPolicy.STATELESS
-                )
+        http
+            .authorizeHttpRequests { auth ->
+                auth.anyRequest().permitAll()
             }
-
+            .csrf { csrf -> csrf.disable() }
 
 
         return http.build()
