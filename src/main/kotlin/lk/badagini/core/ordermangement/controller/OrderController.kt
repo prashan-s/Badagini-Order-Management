@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/orders")
 class OrderController(
     private val orderService: IOrderService,
     private val objectMapper: ObjectMapper,
