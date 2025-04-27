@@ -40,11 +40,7 @@ class SecurityConfig() {
                 Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> { request ->
                     request
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/auth/verify").permitAll()
                         .anyRequest().permitAll()
-                    //.anyRequest().authenticated()
                 }
             )
             .formLogin { form -> form.disable() }
