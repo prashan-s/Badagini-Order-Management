@@ -38,9 +38,7 @@ class SecurityConfig() {
         http.csrf { obj: CsrfConfigurer<HttpSecurity> -> obj.disable() }
             .authorizeHttpRequests(
                 Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> { request ->
-                    request
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
-                        .anyRequest().permitAll()
+                    request.anyRequest().permitAll()
                 }
             )
             .formLogin { form -> form.disable() }
