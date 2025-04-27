@@ -24,5 +24,11 @@ data class OrderItem(
     val quantity: Int,
 
     @Column(nullable = false, precision = 10, scale = 2)
-    val itemPrice: BigDecimal
+    val itemPrice: BigDecimal,
+
+    @Column(nullable = false)
+    val latitude: Double,
+
+    @Column(nullable = false)
+    val longitude: Double
 ) 

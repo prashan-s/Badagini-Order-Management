@@ -6,14 +6,18 @@ data class CreateOrderRequest(
     val customerUserId: Long,
     val restaurantId: Long,
     val items: List<OrderItemRequest>,
-    val deliveryAddress: DeliveryAddressRequest
+    val deliveryAddress: DeliveryAddressRequest,
+    val latitude: Double,
+    val longitude: Double
 )
 
 data class OrderItemRequest(
     val menuItemId: Long,
     val itemName: String,
     val quantity: Int,
-    val itemPrice: BigDecimal
+    val itemPrice: BigDecimal,
+    val latitude: Double,
+    val longitude: Double
 )
 
 data class DeliveryAddressRequest(

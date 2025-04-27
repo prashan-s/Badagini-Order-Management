@@ -33,7 +33,9 @@ class OrderController(
                     menuItemId = item.menuItemId,
                     itemName = item.itemName,
                     quantity = item.quantity,
-                    itemPrice = item.itemPrice
+                    itemPrice = item.itemPrice,
+                    latitude = item.latitude,
+                    longitude = item.longitude
                 )
             }.toMutableList()
         )
