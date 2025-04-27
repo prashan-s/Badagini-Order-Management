@@ -49,6 +49,7 @@ class SecurityConfig() {
                     SessionCreationPolicy.STATELESS
                 )
             }
+            .csrf { csrf -> csrf.disable() }
 
 
 
