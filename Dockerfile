@@ -19,7 +19,7 @@ RUN gradle clean build -x test
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/order-management-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
