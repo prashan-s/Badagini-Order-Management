@@ -36,6 +36,7 @@ class SecurityConfig() {
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { auth ->
+                auth.requestMatchers("/orders/**").permitAll()
                 auth.anyRequest().permitAll()
             }
             .csrf { csrf -> csrf.disable() }
