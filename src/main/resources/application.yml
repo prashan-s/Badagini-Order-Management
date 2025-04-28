@@ -48,7 +48,7 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 35.247.175.213
-    nonSecurePort: 8082
+    nonSecurePort: 8084
 
   client:
     serviceUrl:
