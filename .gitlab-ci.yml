@@ -14,7 +14,7 @@ build:
     - ./gradlew clean build -x test --no-daemon
   artifacts:
     paths:
-      - build/libs/*.jar
+      - build/libs/order-management-0.0.1-SNAPSHOT.jar
     expire_in: 1 week
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
@@ -32,7 +32,7 @@ docker_build_and_push:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - mkdir docker-context
-    - cp build/libs/*.jar docker-context/app.jar
+    - cp build/libs/order-management-0.0.1-SNAPSHOT.jar docker-context/app.jar
     - cp Dockerfile docker-context/
     - cd docker-context
     - docker build -t "$CI_REGISTRY_IMAGE:latest"
