@@ -25,9 +25,17 @@ docker_build_and_push:
   image: docker:24.0.2
   services:
     - docker:dind
-  script:
+  needs:
+    - job: build
+      artifacts: true
+  before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
-    - docker build -t "$CI_REGISTRY_IMAGE:latest" .
+  script:
+    - mkdir docker-context
+    - cp build/libs/*.jar docker-context/app.jar
+    - cp Dockerfile docker-context/
+    - cd docker-context
+    - docker build -t "$CI_REGISTRY_IMAGE:latest"
     - docker push "$CI_REGISTRY_IMAGE:latest"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
