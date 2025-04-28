@@ -11,13 +11,13 @@ COPY build.gradle.kts settings.gradle.kts ./
 COPY gradle ./gradle
 COPY src ./src
 
-RUN gradle clean build -x test
+RUN gradle clean build --no-daemon -x test
 
 # ======================
 # RUNTIME STAGE
 # ======================
-FROM eclipse-temurin:21-jre-alpine
-
+FROM openjdk:21-jdk-slim
+LABEL Name="order-management"
 WORKDIR /app
 COPY --from=build /app/build/libs/order-management-0.0.1-SNAPSHOT.jar app.jar
 
