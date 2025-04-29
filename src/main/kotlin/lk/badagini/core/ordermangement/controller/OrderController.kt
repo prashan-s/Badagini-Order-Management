@@ -71,9 +71,9 @@ class OrderController(
         return ResponseEntity.ok(OrderResponse.fromEntity(orderService.getOrder(id)))
     }
 
-    @GetMapping("/customer/{userId}")
+    @GetMapping("/customer")
     fun getCustomerOrders(
-        @PathVariable userId: Long,
+        @RequestHeader("X-userId") userId: Long,
         pageable: Pageable
     ): ResponseEntity<Page<OrderResponse>> {
         return ResponseEntity.ok(orderService.getCustomerOrders(userId, pageable).map { OrderResponse.fromEntity(it) })
