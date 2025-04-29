@@ -3,7 +3,7 @@ package lk.badagini.core.ordermangement.dto
 import java.math.BigDecimal
 
 data class CreateOrderRequest(
-    val restaurantId: Long,
+    val restaurantId: String,
     val items: List<OrderItemRequest>,
     val deliveryAddress: DeliveryAddressRequest,
     val latitude: Double,

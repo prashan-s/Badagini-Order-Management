@@ -43,7 +43,7 @@ class OrderServiceImpl(
         return orderRepository.findByCustomerUserId(customerId, pageable)
     }
 
-    override fun getMerchantOrders(restaurantId: Long, pageable: Pageable): Page<Order> {
+    override fun getMerchantOrders(restaurantId: String, pageable: Pageable): Page<Order> {
         return orderRepository.findByRestaurantId(restaurantId, pageable)
     }
 
