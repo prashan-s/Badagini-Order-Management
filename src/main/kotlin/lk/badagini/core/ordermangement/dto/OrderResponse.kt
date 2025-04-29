@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class OrderResponse(
     val orderId: Long,
     val customerUserId: Long,
-    val restaurantId: Long,
+    val restaurantId: String,
     val status: OrderStatus,
     val totalAmount: BigDecimal,
     val deliveryAddress: String,

@@ -15,7 +15,7 @@ data class Order(
     val customerUserId: Long,
 
     @Column(nullable = false)
-    val restaurantId: Long,
+    val restaurantId: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

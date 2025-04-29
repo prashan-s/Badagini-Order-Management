@@ -11,6 +11,6 @@ import java.time.LocalDateTime
 @Repository
 interface OrderRepository : JpaRepository<Order, Long> {
     fun findByCustomerUserId(customerUserId: Long, pageable: Pageable): Page<Order>
-    fun findByRestaurantId(restaurantId: Long, pageable: Pageable): Page<Order>
+    fun findByRestaurantId(restaurantId: String, pageable: Pageable): Page<Order>
     fun findByStatusAndOrderTimeBefore(status: OrderStatus, time: LocalDateTime): List<Order>
 } 

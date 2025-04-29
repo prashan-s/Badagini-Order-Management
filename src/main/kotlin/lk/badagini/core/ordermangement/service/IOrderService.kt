@@ -8,7 +8,7 @@ interface IOrderService {
     fun createOrder(order: Order): Order
     fun getOrder(orderId: Long): Order
     fun getCustomerOrders(customerId: Long, pageable: Pageable): Page<Order>
-    fun getMerchantOrders(restaurantId: Long, pageable: Pageable): Page<Order>
+    fun getMerchantOrders(restaurantId: String, pageable: Pageable): Page<Order>
     fun updateOrderStatus(orderId: Long, status: String, actor: String): Order
     fun cancelOrder(orderId: Long, actor: String): Order
 } 

@@ -81,7 +81,7 @@ class OrderController(
 
     @GetMapping("/merchant/{restaurantId}/queue")
     fun getMerchantOrders(
-        @PathVariable restaurantId: Long,
+        @PathVariable restaurantId: String,
         pageable: Pageable
     ): ResponseEntity<Page<OrderResponse>> {
         return ResponseEntity.ok(orderService.getMerchantOrders(restaurantId, pageable).map { OrderResponse.fromEntity(it) })
