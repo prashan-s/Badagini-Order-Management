@@ -7,9 +7,9 @@ spring:
 #    password: root
 #    driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
-    url: jdbc:mysql://34.69.170.59:3306/order_db
-    username: badagini-user
-    password: badagini-user-new-password-12345@#
+    url: jdbc:mysql://mysql:3306/order_db
+    username: badagini
+    password: BadaginiPwd123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -22,7 +22,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 
   rabbitmq:
-    host : old-app.dulanga.com
+    host : rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -45,16 +45,17 @@ spring:
               binding-routing-key: payment.#
 
 eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://eureka:8761/service-registry/eureka/
   instance:
     prefer-ip-address: true
-    ip-address: 35.247.175.213
-    nonSecurePort: 8084
-
-  client:
-    serviceUrl:
-      defaultZone: https://old-app.dulanga.com/service-registry/eureka/
-    fetch-registry: true
-    register-with-eureka: true
+    hostname: orders
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}
+    metadata-map:
+      instanceId: ${spring.application.name}:${server.port}
 
 server:
   port: 8080
