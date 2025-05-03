@@ -33,17 +33,19 @@ class OrderController(
             totalAmount = request.items.sumOf { it.itemPrice * it.quantity.toBigDecimal() },
             deliveryAddress = objectMapper.writeValueAsString(request.deliveryAddress),
             latitude = request.latitude,
-            longitude = request.longitude,
-            items = request.items.map { item ->
-                OrderItem(
-                    order = Order(customerUserId = userId, restaurantId = request.restaurantId, totalAmount = item.itemPrice, deliveryAddress = "",latitude = request.latitude, longitude = request.longitude,),
-                    menuItemId = item.menuItemId,
-                    itemName = item.itemName,
-                    quantity = item.quantity,
-                    itemPrice = item.itemPrice
-                )
-            }.toMutableList()
+            longitude = request.longitude
         )
+        
+        // Create OrderItems with the same Order instance
+        order.items.addAll(request.items.map { item ->
+            OrderItem(
+                order = order,
+                menuItemId = item.menuItemId,
+                itemName = item.itemName,
+                quantity = item.quantity,
+                itemPrice = item.itemPrice
+            )
+        })
         
         val createdOrder = orderService.createOrder(order)
         

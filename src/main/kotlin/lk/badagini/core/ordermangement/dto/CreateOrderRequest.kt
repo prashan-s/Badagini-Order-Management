@@ -6,8 +6,8 @@ data class CreateOrderRequest(
     val restaurantId: String,
     val items: List<OrderItemRequest>,
     val deliveryAddress: DeliveryAddressRequest,
-    val latitude: Double,
-    val longitude: Double
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )
 
 data class OrderItemRequest(

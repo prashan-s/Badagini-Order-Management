@@ -24,7 +24,7 @@ data class Order(
     @Column(nullable = false, precision = 10, scale = 2)
     val totalAmount: BigDecimal,
 
-    @Column(nullable = false, columnDefinition = "JSON")
+    @Column(columnDefinition = "JSON")
     val deliveryAddress: String,
 
     @Column(nullable = false)
@@ -33,11 +33,11 @@ data class Order(
     @Column
     var deliveryTime: LocalDateTime? = null,
 
-    @Column(nullable = false)
-    val latitude: Double,
+    @Column(columnDefinition = "DOUBLE DEFAULT NULL")
+    val latitude: Double? = null,
 
-    @Column(nullable = false)
-    val longitude: Double,
+    @Column(columnDefinition = "DOUBLE DEFAULT NULL")
+    val longitude: Double? = null,
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
     val items: MutableList<OrderItem> = mutableListOf(),
