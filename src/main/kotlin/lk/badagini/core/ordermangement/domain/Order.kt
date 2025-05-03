@@ -33,6 +33,12 @@ data class Order(
     @Column
     var deliveryTime: LocalDateTime? = null,
 
+    @Column(nullable = false)
+    val latitude: Double,
+
+    @Column(nullable = false)
+    val longitude: Double,
+
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
     val items: MutableList<OrderItem> = mutableListOf(),
 

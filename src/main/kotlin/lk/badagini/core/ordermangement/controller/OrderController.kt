@@ -32,15 +32,15 @@ class OrderController(
             restaurantId = request.restaurantId,
             totalAmount = request.items.sumOf { it.itemPrice * it.quantity.toBigDecimal() },
             deliveryAddress = objectMapper.writeValueAsString(request.deliveryAddress),
+            latitude = request.latitude,
+            longitude = request.longitude,
             items = request.items.map { item ->
                 OrderItem(
-                    order = Order(customerUserId = userId, restaurantId = request.restaurantId, totalAmount = item.itemPrice, deliveryAddress = ""),
+                    order = Order(customerUserId = userId, restaurantId = request.restaurantId, totalAmount = item.itemPrice, deliveryAddress = "",latitude = request.latitude, longitude = request.longitude,),
                     menuItemId = item.menuItemId,
                     itemName = item.itemName,
                     quantity = item.quantity,
-                    itemPrice = item.itemPrice,
-                    latitude = item.latitude,
-                    longitude = item.longitude
+                    itemPrice = item.itemPrice
                 )
             }.toMutableList()
         )

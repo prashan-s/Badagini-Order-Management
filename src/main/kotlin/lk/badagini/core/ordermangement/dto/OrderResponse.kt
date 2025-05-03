@@ -37,7 +37,7 @@ data class OrderResponse(
 
 data class OrderItemResponse(
     val orderItemId: Long,
-    val menuItemId: Long,
+    val menuItemId: String,
     val itemName: String,
     val quantity: Int,
     val itemPrice: BigDecimal

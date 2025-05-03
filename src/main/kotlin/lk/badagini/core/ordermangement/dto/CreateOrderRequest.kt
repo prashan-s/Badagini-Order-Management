@@ -11,7 +11,7 @@ data class CreateOrderRequest(
 )
 
 data class OrderItemRequest(
-    val menuItemId: Long,
+    val menuItemId: String,
     val itemName: String,
     val quantity: Int,
     val itemPrice: BigDecimal,

@@ -15,7 +15,7 @@ data class OrderItem(
     val order: Order,
 
     @Column(nullable = false)
-    val menuItemId: Long,
+    val menuItemId: String,
 
     @Column(nullable = false)
     val itemName: String,
@@ -24,11 +24,5 @@ data class OrderItem(
     val quantity: Int,
 
     @Column(nullable = false, precision = 10, scale = 2)
-    val itemPrice: BigDecimal,
-
-    @Column(nullable = false)
-    val latitude: Double,
-
-    @Column(nullable = false)
-    val longitude: Double
+    val itemPrice: BigDecimal
 ) 
