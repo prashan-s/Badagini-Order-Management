@@ -14,9 +14,7 @@ data class OrderItemRequest(
     val menuItemId: String,
     val itemName: String,
     val quantity: Int,
-    val itemPrice: BigDecimal,
-    val latitude: Double,
-    val longitude: Double
+    val itemPrice: BigDecimal
 )
 
 data class DeliveryAddressRequest(
