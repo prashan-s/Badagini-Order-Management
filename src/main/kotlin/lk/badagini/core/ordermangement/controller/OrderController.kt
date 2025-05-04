@@ -89,7 +89,7 @@ class OrderController(
         return ResponseEntity.ok(orderService.getMerchantOrders(restaurantId, pageable).map { OrderResponse.fromEntity(it) })
     }
 
-    @PatchMapping("/{id}/cancel")
+    @PutMapping("/{id}/cancel")
     fun cancelOrder(
         @PathVariable id: Long,
         @RequestParam actor: String
@@ -97,7 +97,7 @@ class OrderController(
         return ResponseEntity.ok(OrderResponse.fromEntity(orderService.cancelOrder(id, actor)))
     }
 
-    @PatchMapping("/{id}/status")
+    @PutMapping("/{id}/status")
     fun updateOrderStatus(
         @PathVariable id: Long,
         @RequestParam status: String,
